@@ -4,9 +4,11 @@ import com.springinaction.spitter.exceptions.DAOException;
 import com.springinaction.spitter.model.Spitter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.inject.Inject;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,7 +29,7 @@ public class SpitterDAOOldJDBCImpl implements SpitterDAO {
     private static final String SQL_SELECT_SPITTER =
             "select user_id, username, password, full_name from spitter_users where user_id = ?";
 
-    @Value("#{dataSource}")
+    @Autowired
     private DataSource dataSource;
 
     @Override

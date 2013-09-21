@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+    <spitter_users username="johndoe" password="jdpassword" full_name="John Doe"/>
+    <spitter_users username="gregsmorag" password="gspassword123" full_name="Grzegorz Smorąg"/>
+    <spitter_users username="jimcarrey" password="jcpassword" full_name="Jim Carrey"/>
+</dataset>
