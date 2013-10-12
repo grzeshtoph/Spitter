@@ -56,5 +56,17 @@
             <version>${unitils.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.unitils</groupId>
+            <artifactId>unitils-mock</artifactId>
+            <version>${unitils.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.unitils</groupId>
+            <artifactId>unitils-inject</artifactId>
+            <version>${unitils.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>
