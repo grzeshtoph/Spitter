@@ -18,7 +18,8 @@ public class Main {
     private static final Logger LOG = LoggerFactory.getLogger(Main.class);
 
     public static void main(String... args) throws DAOException, SQLException {
-        ApplicationContext ctx = new ClassPathXmlApplicationContext("/spring/application-context.xml");
+        ApplicationContext ctx = new ClassPathXmlApplicationContext(args.length == 0 ?
+                "/spring/application-context.xml" : args[0]);
 
         DataSource dataSource = ctx.getBean(DataSource.class);
         LOG.info("connected to {}", dataSource.getConnection().getMetaData().getURL());
