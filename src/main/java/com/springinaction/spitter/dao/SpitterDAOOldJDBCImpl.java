@@ -28,7 +28,6 @@ public class SpitterDAOOldJDBCImpl implements SpitterDAO {
                     + "where user_id = ?";
     private static final String SQL_SELECT_SPITTER =
             "select user_id, username, password, full_name from spitter_users where user_id = ?";
-
     @Autowired
     private DataSource dataSource;
 
@@ -102,18 +101,15 @@ public class SpitterDAOOldJDBCImpl implements SpitterDAO {
             rs = pStmt.executeQuery();
             Spitter spitter = null;
             if (rs.next()) {
-                spitter = new Spitter();
-                spitter.setUserId(rs.getLong("user_id"));
-                spitter.setUsername(rs.getString("username"));
-                spitter.setPassword(rs.getString("password"));
-                spitter.setFullName(rs.getString("fullname"));
+                spitter = new Spitter(rs.getLong("user_id"), rs.getString("username"), rs.getString("password"),
+                        rs.getString("full_name"));
             }
 
             LOG.debug("Spitter returned: {}", spitter);
 
             return spitter;
         } catch (SQLException e) {
-            LOG.error("Erro when fetching spitter for id = " + id, e);
+            LOG.error("Error when fetching spitter for id = " + id, e);
             throw new DAOException(e);
         } finally {
             try {

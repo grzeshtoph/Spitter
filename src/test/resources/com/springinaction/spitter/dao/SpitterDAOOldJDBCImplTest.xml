@@ -1,4 +1,4 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <dataset>
-    <spitter_users />
+    <spitter_users user_id="1" username="johndoe" password="jdpassword" full_name="John Doe"/>
 </dataset>

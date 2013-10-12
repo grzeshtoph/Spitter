@@ -10,6 +10,8 @@ import org.unitils.spring.annotation.SpringApplicationContext;
 import org.unitils.spring.annotation.SpringBean;
 
 import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
+import static org.unitils.reflectionassert.ReflectionAssert.*;
 
 /**
  * Test case for {@link SpitterDAOOldJDBCImpl}.
@@ -29,8 +31,21 @@ public class SpitterDAOOldJDBCImplTest {
     @Test
     @ExpectedDataSet
     public void testAddSpitter() throws Exception {
-        spitterDAO.addSpitter(new Spitter("johndoe", "jdpassword", "John Doe"));
         spitterDAO.addSpitter(new Spitter("gregsmorag", "gspassword123", "Grzegorz Smorąg"));
         spitterDAO.addSpitter(new Spitter("jimcarrey", "jcpassword", "Jim Carrey"));
+    }
+
+    @Test
+    @ExpectedDataSet
+    public void testSaveSpitter() throws Exception {
+        spitterDAO.saveSpitter(new Spitter(1L, "johndoe-updated", "jdpassword-updated", "My John Doe"));
+    }
+
+    @Test
+    public void testGetSpitterById() throws Exception {
+        Spitter expectedSpitter = new Spitter(1L, "johndoe", "jdpassword", "John Doe");
+        Spitter result = spitterDAO.getSpitterById(1L);
+        assertReflectionEquals(expectedSpitter, result);
+        assertNull(spitterDAO.getSpitterById(2L));
     }
 }
