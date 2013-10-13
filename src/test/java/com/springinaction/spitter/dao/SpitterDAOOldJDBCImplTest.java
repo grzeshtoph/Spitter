@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.unitils.UnitilsJUnit4TestClassRunner;
 import org.unitils.dbunit.annotation.DataSet;
 import org.unitils.dbunit.annotation.ExpectedDataSet;
+import org.unitils.reflectionassert.ReflectionComparatorMode;
 import org.unitils.spring.annotation.SpringApplicationContext;
 import org.unitils.spring.annotation.SpringBean;
 
@@ -38,14 +39,14 @@ public class SpitterDAOOldJDBCImplTest {
     @Test
     @ExpectedDataSet
     public void testSaveSpitter() throws Exception {
-        spitterDAO.saveSpitter(new Spitter(1L, "johndoe-updated", "jdpassword-updated", "My John Doe"));
+        spitterDAO.saveSpitter(new Spitter(1L, "johndoe", "jdpassword-updated", "My John Doe"));
     }
 
     @Test
-    public void testGetSpitterById() throws Exception {
+    public void testGetSpitter() throws Exception {
         Spitter expectedSpitter = new Spitter(1L, "johndoe", "jdpassword", "John Doe");
-        Spitter result = spitterDAO.getSpitterById(1L);
-        assertReflectionEquals(expectedSpitter, result);
-        assertNull(spitterDAO.getSpitterById(2L));
+        Spitter result = spitterDAO.getSpitter("johndoe");
+        assertReflectionEquals(expectedSpitter, result, ReflectionComparatorMode.IGNORE_DEFAULTS);
+        assertNull(spitterDAO.getSpitter("johndoe1"));
     }
 }

@@ -5,29 +5,22 @@ import com.springinaction.spitter.model.Spitter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import javax.inject.Inject;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import static com.springinaction.spitter.dao.SQLStatements.*;
+
 /**
- * The pure JDBC implementation of {@link SpitterDAO}.
+ * The old JDBC implementation of {@link SpitterDAO}.
  */
 @Component("spitterDAOOldJDBC")
 public class SpitterDAOOldJDBCImpl implements SpitterDAO {
     private static final Logger LOG = LoggerFactory.getLogger(SpitterDAOOldJDBCImpl.class);
-    private static final String SQL_INSERT_SPITTER =
-            "insert into spitter_users (username, password, full_name) values (?, ?, ?)";
-    private static final String SQL_UPDATE_SPITTER =
-            "update spitter_users set username = ?, password = ?, full_name = ?"
-                    + "where user_id = ?";
-    private static final String SQL_SELECT_SPITTER =
-            "select user_id, username, password, full_name from spitter_users where user_id = ?";
     @Autowired
     private DataSource dataSource;
 
@@ -89,7 +82,7 @@ public class SpitterDAOOldJDBCImpl implements SpitterDAO {
     }
 
     @Override
-    public Spitter getSpitterById(long id) throws DAOException {
+    public Spitter getSpitter(String username) throws DAOException {
         Connection conn = null;
         PreparedStatement pStmt = null;
         ResultSet rs = null;
@@ -97,7 +90,7 @@ public class SpitterDAOOldJDBCImpl implements SpitterDAO {
         try {
             conn = dataSource.getConnection();
             pStmt = conn.prepareStatement(SQL_SELECT_SPITTER);
-            pStmt.setLong(1, id);
+            pStmt.setString(1, username);
             rs = pStmt.executeQuery();
             Spitter spitter = null;
             if (rs.next()) {
@@ -109,7 +102,7 @@ public class SpitterDAOOldJDBCImpl implements SpitterDAO {
 
             return spitter;
         } catch (SQLException e) {
-            LOG.error("Error when fetching spitter for id = " + id, e);
+            LOG.error("Error when fetching spitter for username = " + username, e);
             throw new DAOException(e);
         } finally {
             try {

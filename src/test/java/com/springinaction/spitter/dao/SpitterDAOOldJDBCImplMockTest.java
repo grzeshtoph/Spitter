@@ -92,23 +92,23 @@ public class SpitterDAOOldJDBCImplMockTest {
     }
 
     @Test(expected = DAOException.class)
-    public void testGetSpitterByIdSQLExceptionThrown() throws Exception {
+    public void testGetSpitterSQLExceptionThrown() throws Exception {
         dataSourceMock.raises(new SQLException("test exception")).getConnection();
 
-        spitterDAO.getSpitterById(1L);
+        spitterDAO.getSpitter("johndoe");
 
         dataSourceMock.assertInvoked().getConnection();
     }
 
     @Test(expected = DAOException.class)
-    public void testGetSpitterByIdSQLExceptionFromFinallyThrown() throws Exception {
+    public void testGetSpitterSQLExceptionFromFinallyThrown() throws Exception {
         dataSourceMock.returns(connectionMock).getConnection();
         connectionMock.returns(preparedStatementMock).prepareStatement(any(String.class));
         preparedStatementMock.returns(resultSetMock).executeQuery();
         resultSetMock.returns(false).next();
         connectionMock.raises(new SQLException("test exception")).close();
 
-        assertNull(spitterDAO.getSpitterById(1L));
+        assertNull(spitterDAO.getSpitter("johndoe"));
 
         dataSourceMock.assertInvokedInSequence().getConnection();
         connectionMock.assertInvokedInSequence().prepareStatement(any(String.class));

@@ -28,10 +28,10 @@ public interface SpitterDAO {
     /**
      * Gets Spitter by its ID.
      *
-     * @param id Spitter's ID
+     * @param username user's name
      * @return Spitter
      *
      * @throws DAOException might be thrown in case of querying error
      */
-    Spitter getSpitterById(long id) throws DAOException;
+    Spitter getSpitter(String username) throws DAOException;
 }

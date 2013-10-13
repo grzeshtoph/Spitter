@@ -26,5 +26,10 @@ public class Main {
 
         SpitterDAO spitterDAO = (SpitterDAO) ctx.getBean("spitterDAOOldJDBC");
         spitterDAO.addSpitter(new Spitter("johndoe", "johndoepass", "John Doe"));
+
+        spitterDAO.saveSpitter(new Spitter(spitterDAO.getSpitter("johndoe").getUserId(), "johndoe1",
+                "johndoepass1", "John Doe 1"));
+
+        Spitter spitter = spitterDAO.getSpitter("johndoe1");
     }
 }
